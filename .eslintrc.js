@@ -28,7 +28,7 @@ module.exports = {
       typescript: {},
     },
     'import/parsers': {
-      '@typescript-eslint/parser': ['.ts', '.tsx'],
+      '@typescript-eslint/parser': ['.ts', '.tsx', '.js'],
     },
   },
 };
