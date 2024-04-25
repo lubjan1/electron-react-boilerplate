@@ -6,7 +6,7 @@ const GameDashboard = () => {
   return (
     <div>
       <h1>Game Dashboard</h1>
-      <ul>
+      <ul >
         sadsad
       </ul>
     </div>
