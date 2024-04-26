@@ -6,20 +6,21 @@ const Contet = () => {
   const games = [
     {
       id: 1,
-      name: 'Super Mario',
-      path: "C:/Program Files (x86)/games/Super Mario Forever v7.02/MarioForever 7.02 Beta.exe",
+      name: 'Nexus Scarlet',
+      path: "C:/Games/Scarlet Nexus/ScarletNexus.exe",
     },
-    { id: 2, name: 'Game 2', path: "C:/Program Files (x86)/games/Glamour Puzzle/game.exe" },
+    { id: 2, name: 'Game 2', path: "/" },
     { id: 3, name: 'Game 3', src: 'path/to/game3' },
   ];
-
+  // C:/Program Files (x86)/games/Glamour Puzzle/game.exe
   const launchGame = (gamePath) => {
     console.log(`Launching game: ${gamePath}`);
     electron.ipcRenderer.send('launch-game',gamePath)
   }
 
   return (
-    <main className="content">
+    <main className="content ">
+      <p className='text-red-900'>asadasd</p>
       {games.map((game) => (
         <div key={game.id} onDoubleClick={()=>launchGame(game.path)} className="game-box">
           <h3>{game.name}</h3>
