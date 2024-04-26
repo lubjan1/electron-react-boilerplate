@@ -4,6 +4,8 @@ import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
 
 export type Channels = 'ipc-example';
 
+console.log('Preload is working');
+
 const electronHandler = {
   ipcRenderer: {
     send(channel: Channels, ...args: unknown[]) {

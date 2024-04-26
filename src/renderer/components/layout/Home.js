@@ -11,31 +11,9 @@ import axios from 'axios'
 
 const Home = () => {
 
-  const images = [
-    {img: image1, alt: "First slide"},
-    {img: image2, alt: "Second slide"},
-    {img: image3, alt: "third slide"},
-    {img: image4, alt: "forth slide"}
-  ]
-
-  const test = async () => {
-      return await axios.get("http://localhost:3000/api/test")
-      .then(res=>{
-        console.log(res);
-      })
-      .catch(error => {
-        console.log(error);
-      })
-  };
-
-
   return (
     <div>
-        <div>
-          <button onClick={test}>test request</button>
-        </div>
         <div className='home-content'>
-
           <SideBar /> 
           <Content />
         </div>

@@ -5,7 +5,7 @@ import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 import { spawn } from 'child_process';
-
+import { exec } from 'child_process';
 
 
 class AppUpdater {
@@ -22,10 +22,6 @@ ipcMain.on('ipc-example', async (event, arg) => {
   const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
   console.log(msgTemplate(arg));
   event.reply('ipc-example', msgTemplate('pong'));
-});
-
-ipcMain.on('open-downloads-folder', (event) => {
-  shell.openPath(app.getPath('downloads'));
 });
 
 ipcMain.on('open-game', (event, gamePath) => {
@@ -87,6 +83,19 @@ const createWindow = async () => {
 
   mainWindow.loadURL(resolveHtmlPath('index.html'));
 
+
+  ipcMain.on('launch-game', (event, gamePath) => {
+    exec(`"${gamePath}"`, (error, stdout, stderr) => {
+      if (error) {
+        console.error(`Error launching game: ${error}`);
+        event.reply('launch-game-error', error); // Send error back to renderer process
+        return;
+      }
+      console.log(`Game launched: ${stdout}`);
+    });
+  });
+  
+
   mainWindow.on('ready-to-show', () => {
     if (!mainWindow) {
       throw new Error('"mainWindow" is not defined');
@@ -127,6 +136,8 @@ app.on('window-all-closed', () => {
     app.quit();
   }
 });
+
+
 
 app
   .whenReady()
