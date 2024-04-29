@@ -1,27 +1,32 @@
 import React from 'react'
+import { AiFillHome, AiFillFolder, AiFillFile, AiFillDownload, AiFillPicture } from 'react-icons/ai';
+import { BiMusic } from 'react-icons/bi';
 
 const SideBar = () => {
   return (
     <div className="sidebar">
-    <div className="sidebar-label">This PC</div>
-    <ul className="submenu">
-      <li>Documents</li>
-      <li>Downloads</li>
-      <li>Music</li>
-      <li>Photos</li>
-    </ul>
-    <div className="sidebar-label">Games</div>
-    <ul className="submenu">
-      <li>Game 1</li>
-      <li>Game 2</li>
-      <li>Game 3</li>
-      {/* Add more games as needed */}
-    </ul>
-    <div className="sidebar-label">Info</div>
-    <div className="info">
-      Description about the company internet cafe games.
+      <div className="sidebar-item">
+        <AiFillHome className="sidebar-icon" />
+        <span>Home</span>
+      </div>
+      <div className="sidebar-item">
+        <AiFillFolder className="sidebar-icon" />
+        <span>Documents</span>
+      </div>
+      <div className="sidebar-item">
+        <AiFillFile className="sidebar-icon" />
+        <span>Downloads</span>
+      </div>
+      <div className="sidebar-item">
+        <BiMusic className="sidebar-icon" />
+        <span>Music</span>
+      </div>
+      <div className="sidebar-item">
+        <AiFillPicture className="sidebar-icon" />
+        <span>Pictures</span>
+      </div>
+      {/* Add more sidebar items as needed */}
     </div>
-  </div>
   )
 }
 

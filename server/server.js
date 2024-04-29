@@ -6,7 +6,7 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 
 app.use(cors({
-    origin: ['http://localhost:1212'], // Allowing requests from this origin
+    origin: ['http://localhost:4343'], // Allowing requests from this origin
     methods: ['POST', 'GET'], // Specifying allowed HTTP methods
     credentials: true, // Enabling credentials (such as cookies)
     allowedHeaders: 'Authorization,Content-Type', // Allowing specific headers
