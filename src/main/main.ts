@@ -1,12 +1,12 @@
 import path from 'path';
-import { app, BrowserWindow, shell, ipcMain } from 'electron';
+import { app, BrowserWindow, shell, ipcMain,Menu  } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 import { spawn } from 'child_process';
 import { exec } from 'child_process';
-
+import contextMenu from 'electron-context-menu';
 
 class AppUpdater {
   constructor() {
@@ -65,14 +65,15 @@ const createWindow = async () => {
 
   const getAssetPath = (...paths: string[]): string => {
     return path.join(RESOURCES_PATH, ...paths);
-  };  
+  };
 
   mainWindow = new BrowserWindow({
     show: false,
     width: 1024,
     height: 728,
     icon: getAssetPath('icon.png'),
-    // frame: false,
+    frame: false,
+    fullscreen:true,
     autoHideMenuBar:true,
     webPreferences: {
       preload: app.isPackaged
@@ -82,7 +83,6 @@ const createWindow = async () => {
   });
 
   mainWindow.loadURL(resolveHtmlPath('index.html'));
-
 
   ipcMain.on('launch-game', (event, gamePath) => {
     exec(`"${gamePath}"`, (error, stdout, stderr) => {
@@ -94,7 +94,22 @@ const createWindow = async () => {
       console.log(`Game launched: ${stdout}`);
     });
   });
-  
+
+  // Add context menu
+  mainWindow.webContents.on('context-menu', (event, parameters) => {
+    event.preventDefault(); // Prevent the default context menu from showing
+
+    contextMenu({
+      prepend: (defaultActions, parameters) => [
+        {
+          label: 'Refresh',
+          click: () => {
+            mainWindow?.reload();
+          }
+        }
+      ]
+    }, parameters, mainWindow); // Pass mainWindow as the third argument
+  });
 
   mainWindow.on('ready-to-show', () => {
     if (!mainWindow) {
@@ -137,8 +152,6 @@ app.on('window-all-closed', () => {
   }
 });
 
-
-
 app
   .whenReady()
   .then(() => {
@@ -150,4 +163,3 @@ app
     });
   })
   .catch(console.log);
-
