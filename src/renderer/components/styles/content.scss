@@ -58,17 +58,29 @@
   color: #ffff;
 }
 
+.content::-webkit-scrollbar {
+    background: #0ca678;
+    width: 5px;
+    border-radius: 100%;
+}
+
+.content::-webkit-scrollbar-thumb{
+  background-color: #b0ffe7;
+  border-radius: 100%;
+}
+
 @media screen and (max-width: 768px) {
   .content {
-    padding: 10px; /* Adjust padding for smaller screens */
-    gap: 10px; /* Adjust gap for smaller screens */
+    padding: 10px; 
+    gap: 10px; 
   }
   
   .game-box {
-    height: auto; /* Adjust height for smaller screens */
+    height: auto; 
   }
 
   .game-image {
-    height: auto; /* Adjust height for smaller screens */
+    height: auto; 
   }
 }
+

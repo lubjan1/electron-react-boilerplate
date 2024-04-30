@@ -5,15 +5,15 @@ import GameDashboard from '../GameDashboard'
 import ImageSlider from '../global/imageSlider/ImageSlider'
 import NavBar from './NavBar'
 
-import axios from 'axios'
-
 const Home = () => {
 
   return (
         <div className='home-content'>
-          {/* <NavBar /> */}
-          <SideBar /> 
-          <Content />
+          <NavBar />
+          <div className='main-container'>
+            <SideBar /> 
+            <Content />
+          </div>
         </div>
   )
 }

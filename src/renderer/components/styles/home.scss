@@ -11,6 +11,10 @@
   }
   
   .home-content{
+    display: grid;
+}
+
+.main-container{
   display: flex;
   justify-content: space-between;
 }

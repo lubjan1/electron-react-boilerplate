@@ -1,4 +1,33 @@
 .navbar{
-    background: #b60000;
-    padding: 10rem;
+    background: #0ca6787e;
+    box-shadow: 10px 4px 5px 5px #0ca67817;
+    width: 100%;
+    padding: 8px 0 8px 0;
+    margin-bottom: 10px;
+}
+
+.navbar-content{
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    font-size: x-large;
+    margin-right: 10px;
+    gap: 50px;
+    cursor: pointer;
+}
+
+.navbar-icon{
+    color: white;
+    padding: 4px;
+    box-shadow: 0 3px 3px 2px #0ca67875;
+    background-color: transparent;
+    border-radius: 10px;
+    border: solid 1px #ffffff7a;
+    margin-top: 5px;
+}
+
+.navbar-icon:hover{
+    box-shadow: 0 4px 4px 4px #0ca67875;
+    transform: scale(1.03);
+    transition: 0.3s;
 }

@@ -74,9 +74,9 @@ const Content = () => {
 
   return (
     <div>
-      <div>
+      {/* <div>
         <MainInput />
-      </div>
+      </div> */}
       <main className="content">
         {games.map((game) => (
           <div

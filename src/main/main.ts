@@ -76,6 +76,7 @@ const createWindow = async () => {
     fullscreen:true,
     autoHideMenuBar:true,
     webPreferences: {
+      nodeIntegration: true,
       preload: app.isPackaged
         ? path.join(__dirname, 'preload.js')
         : path.join(__dirname, '../../.erb/dll/preload.js'),
@@ -95,9 +96,9 @@ const createWindow = async () => {
     });
   });
 
-  // Add context menu
+  
   mainWindow.webContents.on('context-menu', (event, parameters) => {
-    event.preventDefault(); // Prevent the default context menu from showing
+    event.preventDefault(); 
 
     contextMenu({
       prepend: (defaultActions, parameters) => [
@@ -108,7 +109,7 @@ const createWindow = async () => {
           }
         }
       ]
-    }, parameters, mainWindow); // Pass mainWindow as the third argument
+    }); 
   });
 
   mainWindow.on('ready-to-show', () => {

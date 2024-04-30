@@ -1,7 +1,6 @@
 // f17f22
 .main-input-container {
     position: relative;
-    margin: 25px 10px 10px 10px;
 
     .main-input:focus {
         outline: solid 1px #0ca678;
@@ -12,15 +11,17 @@
     .search-icon {
         position: absolute;
         left: 20px;
-        top: 50%;
+        top: 57%;
         transform: translateY(-50%);
-        color: #888;
+        color: #f7f7f7;
         z-index: 10;
+        border-radius: 10%;
     }
 
     .main-input {
         position: relative;
-        padding: 5px;
+        background-color: #0ca6781e;
+        padding: 7px;
         padding-left: 30px;
         border: 1px solid #ccc;
         border-radius: 5px;
@@ -28,10 +29,16 @@
         font-size: 14px;
         width: 400px;
         margin-left: 1rem;
+        color: #ffffff;
+        letter-spacing: 1.2px;
+        font-size: 14px;
 
         &::placeholder {
-            color: #999;
+            color: #f7f7f7;
             font-style: italic;
+            letter-spacing: 1.2px;
         }
     }
 }
+
+
