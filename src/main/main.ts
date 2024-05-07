@@ -1,5 +1,5 @@
 import path from 'path';
-import { app, BrowserWindow, shell, ipcMain,Menu  } from 'electron';
+import { app, BrowserWindow, shell, ipcMain, globalShortcut } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
@@ -17,6 +17,13 @@ class AppUpdater {
 }
 
 let mainWindow: BrowserWindow | null = null;
+let tray;
+
+// Intercept Alt+F4 to prevent window from closing
+const handleAltF4 = () => {
+  console.log('Alt+F4 pressed. Ignoring.');
+};
+
 
 ipcMain.on('ipc-example', async (event, arg) => {
   const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
@@ -73,8 +80,8 @@ const createWindow = async () => {
     height: 728,
     icon: getAssetPath('icon.png'),
     frame: false,
-    fullscreen:true,
-    autoHideMenuBar:true,
+    kiosk: true,
+    autoHideMenuBar: true,
     webPreferences: {
       nodeIntegration: true,
       preload: app.isPackaged
@@ -85,20 +92,17 @@ const createWindow = async () => {
 
   mainWindow.loadURL(resolveHtmlPath('index.html'));
 
-  ipcMain.on('launch-game', (event, gamePath) => {
-    exec(`"${gamePath}"`, (error, stdout, stderr) => {
-      if (error) {
-        console.error(`Error launching game: ${error}`);
-        event.reply('launch-game-error', error); // Send error back to renderer process
-        return;
-      }
-      console.log(`Game launched: ${stdout}`);
-    });
+  // Intercept Alt+F4 to prevent window from closing
+  mainWindow.on('close', (event) => {
+    event.preventDefault();
+    handleAltF4();
   });
 
-  
+  // Register global shortcut for Alt+F4
+  globalShortcut.register('Alt+F4', handleAltF4);
+
   mainWindow.webContents.on('context-menu', (event, parameters) => {
-    event.preventDefault(); 
+    event.preventDefault();
 
     contextMenu({
       prepend: (defaultActions, parameters) => [
@@ -109,7 +113,7 @@ const createWindow = async () => {
           }
         }
       ]
-    }); 
+    });
   });
 
   mainWindow.on('ready-to-show', () => {
@@ -141,6 +145,10 @@ const createWindow = async () => {
   new AppUpdater();
 };
 
+app.on('will-quit', () => {
+  globalShortcut.unregisterAll();
+});
+
 /**
  * Add event listeners...
  */
@@ -164,3 +172,4 @@ app
     });
   })
   .catch(console.log);
+
