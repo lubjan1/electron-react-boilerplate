@@ -7,6 +7,7 @@ import { resolveHtmlPath } from './util';
 import { spawn } from 'child_process';
 import { exec } from 'child_process';
 import contextMenu from 'electron-context-menu';
+import  fs  from 'fs';
 
 class AppUpdater {
   constructor() {
@@ -80,10 +81,11 @@ const createWindow = async () => {
     height: 728,
     icon: getAssetPath('icon.png'),
     frame: false,
-    kiosk: true,
+    // kiosk: true,
     autoHideMenuBar: true,
     webPreferences: {
       nodeIntegration: true,
+      contextIsolation: true,
       preload: app.isPackaged
         ? path.join(__dirname, 'preload.js')
         : path.join(__dirname, '../../.erb/dll/preload.js'),
@@ -97,6 +99,25 @@ const createWindow = async () => {
     event.preventDefault();
     handleAltF4();
   });
+
+
+  ipcMain.on('launch-game', (event, gamePath) => {
+    exec(`"${gamePath}"`, (error, stdout, stderr) => {
+      if (error) {
+        console.error(`Error launching game: ${error}`);
+        event.reply('launch-game-error', error); // Send error back to renderer process
+        return;
+      }
+      console.log(`Game launched: ${stdout}`);
+    });
+  });
+
+  ipcMain.on('open-file', (event, filePath) => {
+    console.log(filePath);
+    const child = spawn(filePath, [], { detached: true });
+    child.unref();
+  });
+
 
   // Register global shortcut for Alt+F4
   globalShortcut.register('Alt+F4', handleAltF4);
